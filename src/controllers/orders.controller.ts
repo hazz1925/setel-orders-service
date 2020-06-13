@@ -1,16 +1,20 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { AppService } from '../services/app.service';
-
-export class CreateOrderDto {
-  name: string
-}
+import { OrdersService } from '../services/orders.service';
+import { CreateOrderDto } from '../dtos/create-order.dto'
 
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly ordersService: OrdersService
+  ) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto): string {
-    return createOrderDto.name
+  create(@Body() createOrderDto: CreateOrderDto): object {
+    try {
+      this.ordersService.createOrder(createOrderDto)
+    } catch (error) {
+      return { error }
+    }
+    return { msg: 'Success' }
   }
 }
