@@ -18,8 +18,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
-    "build:db": "docker run --name setel-postgres -p 5432:5432 -e POSTGRES_USER=orderapp -e POSTGRES_PASSWORD=password -e POSTGRES_DB=setel -d postgres"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "build:db": "docker run --name setel-postgres -p 5432:5432 -e POSTGRES_USER=orderapp -e POSTGRES_PASSWORD=password -e POSTGRES_DB=setel -d postgres",
+    "build:image": "docker build -t orders-app .",
+    "start:docker": "docker run -p 3000:3000 -d orders-app"
 
   },
   "dependencies": {
