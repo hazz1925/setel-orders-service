@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Order } from '../entities/order.entity'
@@ -21,6 +21,14 @@ export class OrdersService {
       status: OrdersService.CREATED
     })
     // TODO: trigger payments app
+  }
+
+  get(id: number): Promise<Order> {
+    try {
+      return this.ordersRepository.findOne(id)
+    } catch (error) {
+      throw new NotFoundException()
+    }
   }
 
   cancelOrder(id: number) {

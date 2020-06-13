@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Delete, Param } from '@nestjs/common';
+import { Controller, Post, Body, Delete, Param, Get } from '@nestjs/common';
 import { OrdersService } from '../services/orders.service';
 import { CreateOrderDto } from '../dtos/create-order.dto'
 
@@ -16,6 +16,14 @@ export class OrdersController {
       return { error }
     }
     return { msg: 'Success' }
+  }
+
+  @Get('/status/:id')
+  async status(@Param() params) {
+    const order = await this.ordersService.get(params.id)
+    return {
+      status: order.status
+    }
   }
 
   @Delete(':id')
