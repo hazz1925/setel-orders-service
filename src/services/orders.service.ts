@@ -20,5 +20,12 @@ export class OrdersService {
       ...order,
       status: OrdersService.CREATED
     })
+    // TODO: trigger payments app
+  }
+
+  cancelOrder(id: number) {
+    this.ordersRepository.update(id, {
+      status: OrdersService.CANCELLED
+    })
   }
 }
