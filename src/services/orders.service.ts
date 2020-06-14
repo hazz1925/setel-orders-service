@@ -29,22 +29,22 @@ export class OrdersService {
     const verified = await this.paymentsApi.verifyPayment(order)
 
     if (verified.status === 'approved') {
-      this.ordersRepository.update(order.id, {
+      await this.ordersRepository.update(order.id, {
         status: OrdersService.CONFIRMED
       })
       this.deliverOrder(order.id)
     }
 
     if (verified.status === 'declined') {
-      this.ordersRepository.update(order.id, {
+      await this.ordersRepository.update(order.id, {
         status: OrdersService.CANCELLED
       })
     }
   }
 
   private deliverOrder(id) {
-    setTimeout(() => {
-      this.ordersRepository.update(id, {
+    setTimeout(async () => {
+      await this.ordersRepository.update(id, {
         status: OrdersService.DELIVERED
       })
     }, 10000)
@@ -58,8 +58,8 @@ export class OrdersService {
     }
   }
 
-  cancelOrder(id: number) {
-    this.ordersRepository.update(id, {
+  async cancelOrder(id: number) {
+    await this.ordersRepository.update(id, {
       status: OrdersService.CANCELLED
     })
   }
