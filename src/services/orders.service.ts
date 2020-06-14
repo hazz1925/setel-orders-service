@@ -17,6 +17,10 @@ export class OrdersService {
     private paymentsApi: PaymentsApi
   ) {}
 
+  async getAll(): Promise<Order[]> {
+    return this.ordersRepository.query('SELECT * FROM public.order')
+  }
+
   async createOrder(order: CreateOrderDto) {
     const savedOrder = await this.ordersRepository.save({
       ...order,
