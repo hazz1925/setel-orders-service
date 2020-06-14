@@ -9,5 +9,5 @@ RUN npm ci --only=production
 
 COPY ./dist/ .
 
-EXPOSE 3000
+EXPOSE 3033
 CMD ["node", "main"]
