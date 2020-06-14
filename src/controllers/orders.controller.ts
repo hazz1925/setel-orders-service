@@ -9,13 +9,13 @@ export class OrdersController {
   ) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto): object {
+  create(@Body() createOrderDto: CreateOrderDto): Response {
     try {
       this.ordersService.createOrder(createOrderDto)
     } catch (error) {
-      return { error }
+      return { error: error.message }
     }
-    return { msg: 'Success' }
+    return { message: 'Success' }
   }
 
   @Get('/status/:id')
@@ -27,12 +27,17 @@ export class OrdersController {
   }
 
   @Delete(':id')
-  cancel(@Param() params) {
+  cancel(@Param() params): Response {
     try {
       this.ordersService.cancelOrder(params.id)
     } catch (error) {
-      return { error }
+      return { error: error.message }
     }
-    return { msg: 'Success' }
+    return { message: 'Success' }
   }
+}
+
+interface Response {
+  message?: string
+  error?: string
 }
